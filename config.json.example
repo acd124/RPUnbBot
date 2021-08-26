@@ -1,0 +1,20 @@
+{
+    "token": "",
+    "unbToken": "",
+    "prefix": "!",
+    "owners": [
+        ""
+    ],
+    "developers": [
+        ""
+    ],
+    "presence": {
+        "status": "online",
+        "activities": [
+            {
+                "type": "WATCHING",
+                "name": "text"
+            }
+        ]
+    }
+}
