@@ -51,6 +51,12 @@ class RPUnbBot extends Client {
             }).catch(err => null);
         }
     }
+
+    async login(token) {
+        const result = await super.login(token);
+        await this.devLog(`${this.user.tag} online`, '');
+        return result;
+    }
 }
 
 module.exports = RPUnbBot;

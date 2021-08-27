@@ -11,7 +11,7 @@ module.exports = class extends Command {
     }
 
     async run({ client, message, channel, member, guild, args }) {
-        const id = args || member.id;
+        const id = args.match(/\d{17, 21}/)?.[0] || member.id;
         const balance = await client.unb.getUserBalance(guild.id, id);
         return await channel.send(`${balance.user_id} ${balance.cash} ${balance.bank}`);
     }

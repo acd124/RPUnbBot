@@ -26,7 +26,7 @@ module.exports = class extends Command {
         );
 
         const errors = (await Promise.all(balances.map(async ([u, n], i) => {
-            return await client.unb.editUserBalance(guild.id, u, { cash: Number(n) })
+            return await client.unb.editUserBalance(guild.id, u.match(/\d{17,21}/)[0], { cash: Number(n) })
                 .then(() => null).catch(() => i + 1);
         }))).filter(e => e);
 
