@@ -1,7 +1,7 @@
 class Command {
 	/**
 	 * 
-	 * @param {import('./index.js')} client 
+	 * @param {import('../index.js')} client 
 	 * @param {string} name 
 	 * @param {Object} [options={}]
 	 * @param {string} [options.description='N/A']

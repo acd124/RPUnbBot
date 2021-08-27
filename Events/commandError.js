@@ -1,4 +1,4 @@
-const EventHandler = require('../EventHandler');
+const EventHandler = require('../Structures/EventHandler');
 
 module.exports = class extends EventHandler {
     async run(error, command, message) {

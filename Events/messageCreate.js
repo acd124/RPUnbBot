@@ -1,4 +1,4 @@
-const EventHanlder = require('../EventHandler.js');
+const EventHanlder = require('../Structures/EventHandler.js');
 
 module.exports = class extends EventHanlder {
     async run(message) {
@@ -20,7 +20,7 @@ module.exports = class extends EventHanlder {
         
         const commandContent = message.content.slice(prefixUsed.length).trim();
         const commandName = commandContent.split(' ')[0];
-        /** @type {import('../Command.js')} */
+        /** @type {import('../Structures/Command.js')} */
         const command = this.client.commands.find(c => c.match(commandName));
         if (!command) return;
 

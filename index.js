@@ -1,7 +1,7 @@
 const { Client, Intents } = require('discord.js');
 const { Client: UnbClient } = require('unb-api');
 const config = require('./config.json');
-const Store = require('./Store.js');
+const Store = require('./Structures/Store.js');
 
 class RPUnbBot extends Client {
     constructor() {

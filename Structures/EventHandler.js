@@ -1,7 +1,7 @@
 class EventHandler {
     /**
      * A class to handle events safely
-     * @param {import('./index.js')} client - The client object
+     * @param {import('../index.js')} client - The client object
      * @param {string} name - The name of this event handler
      * @param {Object} [options] - The options for the event handler
      * @param {import('events').EventEmitter} [options.emitter=client] - The source of the events
