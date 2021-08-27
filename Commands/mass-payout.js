@@ -13,13 +13,13 @@ module.exports = class extends Command {
     }
 
     async run({ client, message, channel, member, guild, args }) {
-        const balances = args.split('\n').map(s => s.split(' '));
+        const balances = args.split('\n').map(s => {const t = s.split(' '); const n = t.pop(); return [t.join(' '), n]});
 
-        const lengthError = balances.findIndex(b => b.length !== 2) + 1;
+        const lengthError = balances.findIndex(b => b.length < 2) + 1;
         const numberError = balances.findIndex(([u, n]) => !n.match(/-?\d+/)) + 1;
 
         if (lengthError) return await channel.send(
-            `Line ${lengthError} does not have exactly 2 parts. I need the user and the amount separated by a space.`
+            `Line ${lengthError} only has 1 part. I need the user and the amount separated by a space.`
         );
         if (numberError) return await channel.send(
             `Line ${numberError} has an amount that is not a valid number.`
