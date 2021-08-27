@@ -25,6 +25,8 @@ module.exports = class extends Command {
             `Line ${numberError} has an amount that is not a valid number.`
         );
 
+        const mess = await channel.send('<a:loading:694427106490318938> working on it');
+
         const errors = (await Promise.all(balances.map(async ([u, n], i) => {
             try {
                 return await client.unb.editUserBalance(
@@ -33,12 +35,13 @@ module.exports = class extends Command {
                         (await guild.members.search({ query: u.split('#')[0] })
                         .then(mem => mem.find(m => u.split('#')[1].trim() ? m.user.discriminator === u.split('#')[1].trim() : true)?.id)),
                     { cash: Number(n) }
-                ).then(() => null).catch(() => i + 1);
+                ).then(() => null).catch(e => {return i + 1});
             } catch(err) {
                 return i + 1;
             }
         }))).filter(e => e);
 
+        await mess.edit('<:checkmark:691859971108896829> Done')
         return await channel.send(
             `${errors.length} Errors\n${balances.length - errors.length} Successful` +
             (errors.length ? `\nErrors on lines: ${errors.join(', ')}` : '')
