@@ -15,7 +15,7 @@ class Store extends Collection {
     constructor(directory, subDirectory = false) {
         super();
 
-        this.directory = directory;
+        this.directory = require('path').join(process.cwd(), directory);
         this.subDirectory = !!subDirectory;
     }
 
