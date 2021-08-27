@@ -11,7 +11,7 @@ module.exports = class extends Command {
 
     async run({ client, message, channel, member, guild, args }) {
         const lb = await client.unb.getGuildLeaderboard(guild.id);
-        const csv = lb.map(u => `${u.user_id}, ${u.cash}, ${u.bank},`).join('\n');
+        const csv = (await Promise.all(lb.map(async u => `${await this.client.users.fetch(u.user_id).then(us => us.tag).catch(err => u.user_id)}, ${u.cash}, ${u.bank},`))).join('\n');
         return await channel.send({ files: [{ name: 'leaderboard.txt', attachment: Buffer.from(csv) }] });
     }
 }

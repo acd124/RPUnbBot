@@ -6,6 +6,8 @@ module.exports = class extends Command {
             description: 'Get the balance of a user.',
             aliases: ['bal'],
             guildOnly: true,
+            developer: true,
+            hidden: true,
             args: ['[user]']
         });
     }

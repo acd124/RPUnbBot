@@ -5,6 +5,7 @@ module.exports = class extends Command {
         super(client, name, {
             description: 'Set the bot status.',
             owner: true,
+            hidden: true,
             args: ['<status>', '<type>', '<message>']
         });
     }
