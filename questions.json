@@ -1,0 +1,46 @@
+[
+    {
+        "question": "What is the name of your sponsered account? (example: light.starter)",
+        "number": false
+    },
+    {
+        "question": "how many credits do you have left in the account?",
+        "number": true
+    },
+    {
+        "question": "What was your rating last season? (can be found at battles -> last season)",
+        "number": true
+    },
+    {
+        "question": "How many battles have you played? (can be found at battles -> last season)",
+        "number": true
+    },
+    {
+        "question": "How many battles have you won? (can be found at battles -> last season)",
+        "number": true
+    },
+    {
+        "question": "On Average, how many hours per day have you invested? This can be an estimation based on your feeling.",
+        "number": true
+    },
+    {
+        "question": "How many DEC have you earned?",
+        "number": true
+    },
+    {
+        "question": "How many SPS have you liquid? (can be found in the SPS dashboard)",
+        "number": true
+    },
+    {
+        "question": "How many Alchemy potions do you have on your account?",
+        "number": true
+    },
+    {
+        "question": "How many legendary potions do you have on your account?",
+        "number": true
+    },
+    {
+        "question": "What is the value of the reward cards you earned?\ngo to Peakmonsters.com, login, click on bulk view and filter by \"owned\" and name the **market value** NOT the list price!",
+        "number": true
+    }
+]

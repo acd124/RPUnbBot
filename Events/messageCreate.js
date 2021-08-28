@@ -1,10 +1,8 @@
 const EventHanlder = require('../Structures/EventHandler.js');
 
 module.exports = class extends EventHanlder {
-    async run(message) {
-        if (message.channel.type === 'DM' && message.author.id !== this.client.user.id && !this.client.config.developers.includes(message.author.id))
-            await this.client.devLog(message.content, `DM from ${message.author.tag} (${message.author.id})`);
-        if (message.author.bot) return;
+    async run(message) {    
+        if (message.author.bot) return this.dmLog(message);
         if (message.guild && !message.channel.permissionsFor(this.client.user).has('SEND_MESSAGES')) return;
 
         if (message.content.match(`<@!?${this.client.user.id}>`)) {
@@ -16,18 +14,19 @@ module.exports = class extends EventHanlder {
         const prefixUsed = message.content.match(new RegExp(
             `^(?:<@!?${this.client.user.id}>|${this.client.config.prefix.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')})`
         ))?.[0];
-        if (!prefixUsed) return;
+        if (!prefixUsed) return this.dmLog(message);
         
         const commandContent = message.content.slice(prefixUsed.length).trim();
         const commandName = commandContent.split(' ')[0];
         /** @type {import('../Structures/Command.js')} */
         const command = this.client.commands.find(c => c.match(commandName));
-        if (!command) return;
+        if (!command) return this.dmLog(message);
 
-        if (command.developer && !this.client.config.developers.includes(message.author.id)) return;
-        if (command.owner && !this.client.config.owners.includes(message.author.id)) return;
+        if (command.developer && !this.client.config.developers.includes(message.author.id)) return this.dmLog(message);
+        if (command.owner && !this.client.config.owners.includes(message.author.id)) return this.dmLog(message);
 
-        if (command.guildOnly && message.channel.type === 'DM') return;
+        if (command.guildOnly && message.channel.type === 'DM') return this.dmLog(message);
+        if (command.guildOnly === false && message.channel.type !== 'DM') return this.dmLog(message);
 
         if (message.guild && command.permissions.some(p => !message.channel.permissionsFor(message.member).has(p))) {
             return !command.hidden && await message.channel.send(
@@ -57,8 +56,13 @@ module.exports = class extends EventHanlder {
                 args
             });
         } catch (err) {
-            await message.channel.send(':x: Something went wrong while trying to run that command');
+            await message.channel.send(':x: Something went wrong while trying to run that command').catch(err => null);
             this.client.emit('commandError', err, command, message);
         }
+    }
+
+    async dmLog(message) {
+        if (message.channel.type === 'DM' && message.author.id !== this.client.user.id && !this.client.config.developers.includes(message.author.id))
+            await this.client.devLog(message.content, `DM from ${message.author.tag} (${message.author.id})`);
     }
 }

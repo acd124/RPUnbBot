@@ -19,7 +19,7 @@ class Command {
 		this.name = name.toLowerCase();
 		this.description = options.description || 'N/A';
 		this.aliases = (options.aliases || []).map(alias => alias.toLowerCase());
-		this.guildOnly = !!options.guildOnly;
+		this.guildOnly = 'guildOnly' in options ? options.guildOnly : null;
 		this.owner = !!options.owner;
         this.developer = !!options.developer;
 		this.hidden = !!options.hidden;

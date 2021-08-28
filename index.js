@@ -52,6 +52,13 @@ class RPUnbBot extends Client {
         }
     }
 
+    async ownerLog(data) {
+        for (const owner of this.config.owners) {
+            const user = await this.users.fetch(owner);
+            await user.send(data);
+        }
+    }
+
     async login(token) {
         const result = await super.login(token);
         await this.devLog(`${this.user.tag} online`, '');
