@@ -65,7 +65,7 @@ module.exports = class extends Command {
         for (let i = 0; i < 20; i++) {
             await channel.send((i ? ':x: That\'s not a number, please try again.\n' : '') + question);
             const result = await channel.awaitMessages({
-                max: 1, filter: m => m.author.id === author.id, time: 30000, errors: ['time']
+                max: 1, filter: m => m.author.id === author.id, time: 5 * 60 * 1000, errors: ['time']
             }).then(m => m.first()?.content);
             if (!number) return result;
             if (!isNaN(Number(result))) return result;
