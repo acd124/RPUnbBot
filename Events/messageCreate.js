@@ -62,7 +62,7 @@ module.exports = class extends EventHanlder {
     }
 
     async dmLog(message) {
-        if (message.channel.type === 'DM' && message.author.id !== this.client.user.id && !this.client.config.developers.includes(message.author.id))
+        if (message.channel.type === 'DM' && message.author.id !== this.client.user.id && !this.client.config.developers.includes(message.author.id) && !message.author.awaiting)
             await this.client.devLog(message.content, `DM from ${message.author.tag} (${message.author.id})`);
     }
 }

@@ -31,10 +31,12 @@ module.exports = class extends Command {
             'If you are unsure about something reach out to your teamleader or the managment').catch(e => null)))
             return await mess.edit(':x: I was unable to dm you, make sure your dms are open for this server.');
 
+        message.author.awaiting = true;
         for (const { question, number } of questions) {
             try {
                 answers.push(await this.getResponse(chan, message.author, question, number));
             } catch (err) {
+                delete message.author.awaiting;
                 await mess.edit(':x: Registration failed');
                 if (err.message === 'Too many tries') {
                     return await chan.send(':x: Too many attempts, command cancelled.');
@@ -45,6 +47,7 @@ module.exports = class extends Command {
                 return await chan.send(':x: Something went wrong with that, you\'ll have to try again once this is fixed');
             }
         }
+        delete message.author.awaiting;
 
         await this.client.ownerLog(answers.join(', '));
         await mess.edit('<:checkmark:691859971108896829> Successfully registered.');
