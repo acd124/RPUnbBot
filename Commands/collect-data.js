@@ -22,7 +22,7 @@ module.exports = class extends Command {
     async run({ client, message, channel, member, guild, args }) {
         const questions = require('../data-questions.json');
         const now = new Date();
-        const answers = [[now.getDate(), now.getMonth(), now.getFullYear].join('.'), message.author.tag];
+        const answers = [[now.getDate(), now.getMonth(), now.getFullYear()].join('.'), message.author.tag];
 
         const mess = await channel.send('Starting the registration process now.');
 
