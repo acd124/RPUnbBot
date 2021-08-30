@@ -59,6 +59,25 @@ class RPUnbBot extends Client {
         }
     }
 
+    /**
+     * 
+     * @param {import('discord.js').DMChannel} channel
+     * @param {import('discord.js').User} author
+     * @param {string} question 
+     * @returns {Promise<string>}
+     */
+     async getResponse(channel, author, question, number = false) {
+        for (let i = 0; i < 20; i++) {
+            await channel.send((i ? ':x: That\'s not a number, please try again.\n' : '') + question);
+            const result = await channel.awaitMessages({
+                max: 1, filter: m => m.author.id === author.id, time: 5 * 60 * 1000, errors: ['time']
+            }).then(m => m.first()?.content);
+            if (!number) return result;
+            if (!isNaN(Number(result.replace(/,/g, '')))) return result;
+        }
+        throw new Error('Too many tries');
+    }
+
     async login(token) {
         const result = await super.login(token);
         await this.devLog(`${this.user.tag} online`, '');

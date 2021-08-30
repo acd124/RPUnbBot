@@ -1,0 +1,9 @@
+[
+    { "label": "account", "question": "What is the name of your sponsored account? (example elve.starter)", "number": false },
+    { "label": "", "question": "How many credits do you want?", "number": true },
+    { "label": "reason", "question": "Why do you need more credits?", "number": false },
+    { "label": "league", "question": "What league are you currently in? (example silver III)", "number": false },
+    { "label": "DEC earned", "question": "How many DEC are on your account?", "number": true },
+    { "label": "credits earned", "question": "How many credits have you got this season?\nEstimate or check your credit history for \"purchases\"", "number": true },
+    { "label": "credits left", "question": "how many credits are left on your account?", "number": true }
+]

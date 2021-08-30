@@ -1,4 +1,3 @@
-const { Channel } = require('discord.js');
 const Command = require('../Structures/Command.js');
 
 module.exports = class extends Command {
@@ -21,8 +20,9 @@ module.exports = class extends Command {
      */
     // @ts-ignore
     async run({ client, message, channel, member, guild, args }) {
-        const questions = require('../questions.json');
-        const answers = [message.author.tag];
+        const questions = require('../data-questions.json');
+        const now = new Date();
+        const answers = [[now.getDate(), now.getMonth(), now.getFullYear].join('.'), message.author.tag];
 
         const mess = await channel.send('Starting the registration process now.');
 
@@ -31,12 +31,12 @@ module.exports = class extends Command {
             'If you are unsure about something reach out to your teamleader or the managment').catch(e => null)))
             return await mess.edit(':x: I was unable to dm you, make sure your dms are open for this server.');
 
-        message.author.awaiting = true;
+        // message.author.awaiting = true;
         for (const { question, number } of questions) {
             try {
-                answers.push(await this.getResponse(chan, message.author, question, number));
+                answers.push(await this.client.getResponse(chan, message.author, question, number));
             } catch (err) {
-                delete message.author.awaiting;
+                // delete message.author.awaiting;
                 await mess.edit(':x: Registration failed');
                 if (err.message === 'Too many tries') {
                     return await chan.send(':x: Too many attempts, command cancelled.');
@@ -47,29 +47,10 @@ module.exports = class extends Command {
                 return await chan.send(':x: Something went wrong with that, you\'ll have to try again once this is fixed');
             }
         }
-        delete message.author.awaiting;
+        // delete message.author.awaiting;
 
         await this.client.ownerLog(answers.join(', '));
         await mess.edit('<:checkmark:691859971108896829> Successfully registered.');
         return await chan.send('Thank you for the information, I\'ve sent it to be registered');
-    }
-
-    /**
-     * 
-     * @param {import('discord.js').DMChannel} channel
-     * @param {import('discord.js').User} author
-     * @param {string} question 
-     * @returns {Promise<string>}
-     */
-    async getResponse(channel, author, question, number = false) {
-        for (let i = 0; i < 20; i++) {
-            await channel.send((i ? ':x: That\'s not a number, please try again.\n' : '') + question);
-            const result = await channel.awaitMessages({
-                max: 1, filter: m => m.author.id === author.id, time: 5 * 60 * 1000, errors: ['time']
-            }).then(m => m.first()?.content);
-            if (!number) return result;
-            if (!isNaN(Number(result))) return result;
-        }
-        throw new Error('Too many tries');
     }
 }
