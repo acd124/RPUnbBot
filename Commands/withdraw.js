@@ -15,7 +15,7 @@ module.exports = class extends Command {
         const amount = Math.abs(parseInt(list.shift(), 10));
         const account = list.join(' ');
 
-        if (isNaN(amount)) return await channel.send(':x: Invalid amount');
+        if (isNaN(amount) || amount === 0) return await channel.send(':x: Invalid amount');
         const bal = await client.unb.getUserBalance(guild.id, member.id);
         if (bal.cash < amount) return await channel.send(`:x: You don't have that much cash, you only have ${bal.cash} on hand.`);
         if (!account) return await channel.send(':x: Make sure to specify what account you want to withdraw to.');
